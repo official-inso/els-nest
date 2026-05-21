@@ -1,8 +1,8 @@
 {
   "name": "@inso_web/els-nest",
   "version": "0.5.1",
-  "description": "NestJS module и LoggerService для @inso_web/els-client. Drop-in замена встроенного Logger NestJS, nestjs-pino и pino-nestjs. Поддержка app.useLogger() и DI инжекта.",
-  "homepage": "https://api.insoweb.ru/els",
+  "description": "NestJS module and LoggerService for @inso_web/els-client. A drop-in replacement for the built-in NestJS Logger, nestjs-pino and pino-nestjs. Supports app.useLogger() and DI injection.",
+  "homepage": "https://els.insoweb.ru",
   "author": "INSOWEB",
   "type": "module",
   "main": "./dist/index.cjs",
