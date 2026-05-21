@@ -3,11 +3,11 @@ import type { ELSClient } from "@inso_web/els-client";
 import { ELS_CLIENT } from "./ELS.constants.js";
 
 /**
- * Имплементация NestJS LoggerService поверх ELSClient.
+ * NestJS `LoggerService` implementation backed by an {@link ELSClient}.
  *
- * Подключается через `app.useLogger(app.get(ELSLoggerService))`.
- * После этого вся встроенная Nest Logger подсистема (`new Logger(ContextName).log()`,
- * `console.log` от NestJS, ошибки бутстрапа) автоматически летит в ELS.
+ * Wire it up with `app.useLogger(app.get(ELSLoggerService))`. After that, the
+ * whole built-in Nest logging subsystem (`new Logger(ctx).log()`, framework
+ * `console.log`, bootstrap errors) is forwarded to ELS automatically.
  */
 @Injectable()
 export class ELSLoggerService implements LoggerService {
@@ -52,8 +52,8 @@ export class ELSLoggerService implements LoggerService {
   }
 
   /**
-   * Nest передаёт context (имя класса/модуля) последним строковым аргументом
-   * либо через `setContext`. Извлекаем его если это последний строковый параметр.
+   * Nest passes the context (class/module name) as the last string argument or
+   * via `setContext`. Extract it when the last param is a string.
    */
   private extractContext(params: any[]): Record<string, unknown> {
     const last = params[params.length - 1];
@@ -63,14 +63,14 @@ export class ELSLoggerService implements LoggerService {
     return {};
   }
 
-  /** Для info/warn/debug/trace/fatal — принимают object | string */
+  /** For info/warn/debug/trace/fatal — they accept object | string. */
   private toLogArg(message: any): object | string {
     if (typeof message === "string") return message;
     if (message && typeof message === "object") return message;
     return String(message);
   }
 
-  /** Для error() — приводим к string чтобы попасть во второй параметр Logger.error */
+  /** For error() — coerce to a string so it lands in Logger.error's message param. */
   private toMessageString(message: any): string {
     if (typeof message === "string") return message;
     if (message instanceof Error) return message.message;

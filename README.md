@@ -72,7 +72,6 @@ import { ELSModule } from '@inso_web/els-nest';
 @Module({
   imports: [
     ELSModule.forRoot({
-      endpoint: process.env.ELS_URL!,
       apiKey: process.env.ELS_API_KEY!,
       appSlug: 'my-nest-app',
       serviceName: 'api',
@@ -146,7 +145,6 @@ ELSModule.forRootAsync({
   imports: [ConfigModule],
   inject: [ConfigService],
   useFactory: (config: ConfigService) => ({
-    endpoint: config.getOrThrow('ELS_URL'),
     apiKey: config.getOrThrow('ELS_API_KEY'),
     appSlug: 'my-nest-app',
     deploymentEnv: config.get('NODE_ENV') === 'production' ? 'PRODUCTION' : 'DEV',
@@ -200,7 +198,6 @@ Calls are fire-and-forget. The HTTP transport batches in the background. `app.cl
 
 | Option | Description |
 |---|---|
-| `endpoint` | ELS URL (required) |
 | `apiKey` | API key (required) |
 | `appSlug` | App slug (required) |
 | `serviceName` | Service / module name |
@@ -311,7 +308,6 @@ export class SomeService {
 @Module({
   imports: [
     ELSModule.forRoot({
-      endpoint: process.env.ELS_URL!,
       apiKey: process.env.ELS_API_KEY!,
       appSlug: 'my-nest-app',
       minLevel: 'info',
@@ -382,7 +378,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
 @Module({
   imports: [
     ELSModule.forRoot({
-      endpoint: process.env.ELS_URL!,
       apiKey: process.env.ELS_API_KEY!,
       appSlug: 'my-nest-app',
       deploymentEnv: 'PRODUCTION',
@@ -407,7 +402,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
 | Sentry | ELS | Notes |
 |---|---|---|
-| `SentryModule.forRoot({ dsn })` | `ELSModule.forRoot({ endpoint, apiKey, appSlug })` | Three explicit fields instead of DSN |
+| `SentryModule.forRoot({ dsn })` | `ELSModule.forRoot({ apiKey, appSlug })` | Three explicit fields instead of DSN |
 | `sentry.captureException(err)` | `logger.error(err.message, err.stack)` | Stack lands in `meta.stack` |
 | `release` | `appVersion` | Any string ≤128 chars |
 | `environment` | `deploymentEnv` | Fixed enum |

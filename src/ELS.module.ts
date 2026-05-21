@@ -10,10 +10,13 @@ export interface ELSModuleAsyncOptions {
 }
 
 /**
- * Глобальный NestJS модуль для @inso_web/els-client.
+ * Global NestJS module for `@inso_web/els-client`.
  *
- * Регистрирует ELSClient как DI provider под токеном ELS_CLIENT
- * и ELSLoggerService — для использования через `app.useLogger()`.
+ * Registers an {@link ELSClient} as a DI provider under the `ELS_CLIENT` token
+ * plus {@link ELSLoggerService} for use with `app.useLogger()`.
+ *
+ * @example
+ * ELSModule.forRoot({ apiKey: process.env.ELS_API_KEY!, appSlug: "my-app" })
  */
 @Module({})
 export class ELSModule {

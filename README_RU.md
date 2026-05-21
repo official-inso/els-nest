@@ -72,7 +72,6 @@ import { ELSModule } from '@inso_web/els-nest';
 @Module({
   imports: [
     ELSModule.forRoot({
-      endpoint: process.env.ELS_URL!,
       apiKey: process.env.ELS_API_KEY!,
       appSlug: 'my-nest-app',
       serviceName: 'api',
@@ -146,7 +145,6 @@ ELSModule.forRootAsync({
   imports: [ConfigModule],
   inject: [ConfigService],
   useFactory: (config: ConfigService) => ({
-    endpoint: config.getOrThrow('ELS_URL'),
     apiKey: config.getOrThrow('ELS_API_KEY'),
     appSlug: 'my-nest-app',
     deploymentEnv: config.get('NODE_ENV') === 'production' ? 'PRODUCTION' : 'DEV',
@@ -200,7 +198,6 @@ ELSModule.forRootAsync({
 
 | Опция | Описание |
 |---|---|
-| `endpoint` | URL ELS (обязательно) |
 | `apiKey` | API-ключ (обязательно) |
 | `appSlug` | Slug приложения (обязательно) |
 | `serviceName` | Имя сервиса / модуля |
@@ -310,7 +307,6 @@ export class SomeService {
 @Module({
   imports: [
     ELSModule.forRoot({
-      endpoint: process.env.ELS_URL!,
       apiKey: process.env.ELS_API_KEY!,
       appSlug: 'my-nest-app',
       minLevel: 'info',
@@ -380,7 +376,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
 @Module({
   imports: [
     ELSModule.forRoot({
-      endpoint: process.env.ELS_URL!,
       apiKey: process.env.ELS_API_KEY!,
       appSlug: 'my-nest-app',
       deploymentEnv: 'PRODUCTION',
@@ -405,7 +400,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
 | Sentry | ELS | Заметки |
 |---|---|---|
-| `SentryModule.forRoot({ dsn })` | `ELSModule.forRoot({ endpoint, apiKey, appSlug })` | Три явных поля вместо DSN |
+| `SentryModule.forRoot({ dsn })` | `ELSModule.forRoot({ apiKey, appSlug })` | Три явных поля вместо DSN |
 | `sentry.captureException(err)` | `logger.error(err.message, err.stack)` | Stack уходит в `meta.stack` |
 | `release` | `appVersion` | Любая строка ≤128 |
 | `environment` | `deploymentEnv` | Фиксированный enum |
